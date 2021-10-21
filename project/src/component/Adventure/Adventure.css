@@ -1,0 +1,35 @@
+.adventure_slider{
+    background-color: rgb(239, 237, 232);
+    height: 900px;
+    /* height: 500px; */
+    padding: 7rem 10rem;
+    margin-top: 11px;
+}
+
+.adventure_buttons{
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.adventure_drive_one{
+    height: 560px;
+    width: 504px;
+    cursor: pointer;
+}
+.adventure_contents_heading{
+    font-size: 44px;
+    letter-spacing: 8px;
+
+}
+.adventure_content_para{
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+.adventure_image{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 50px;
+}

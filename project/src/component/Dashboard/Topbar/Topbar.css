@@ -1,0 +1,13 @@
+
+.topbar_slider_smalldiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 29%;
+}
+.topbar_slider_main{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}

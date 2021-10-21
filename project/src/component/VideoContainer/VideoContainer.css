@@ -1,0 +1,35 @@
+.video_container_slider{
+    height: 700px;
+    background-color: rgb(255 255 255);
+    margin-top: 29px;
+    padding: 3rem 11rem;
+
+}
+.video_container_main{
+    height: 400px;
+ 
+}
+.video_container_small_conts{
+    display: flex;
+}
+.video_container_contents_heading{
+    font-size: 50px;
+    letter-spacing: 7px;
+}
+.video_container_small{
+ 
+    width: 200px;
+}
+.videos_container{
+    height: 300px;
+    width: 500px;
+}
+.video_container_videolist{
+    display: flex;
+    /* align-items: center; */
+    width: 100%;
+    justify-content: space-between;
+}
+.video_container_list_list{
+    overflow: scroll;
+}

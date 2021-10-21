@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
+body{
+    margin: 0;
+    padding: 0;
+}
+.navbar_slider{
+    background-color: rgb(255 255 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 2rem;
+}
+.navbar_content_head{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    cursor: pointer;
+    width: 26%;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.navbar_content_heading:hover{
+    text-decoration: underline;
+}
+.navbar_head{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.navbar_logo{
+   
+    height: 80px;
+    width: 69px;
+    border-radius: 29px;
+
+}
+.footer_navbar_ul{
+    list-style: none;
+    padding: 1rem 1rem;
+}
+.navbar_head_heading{
+    font-family: 'Roboto Condensed', sans-serif;
+    letter-spacing: 10px;
+    font-size: 29px;
+}
+.footer_slider{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 19px;
+    cursor: pointer;
+    color: black;
+}
+.popups{
+    display: block;
+    width: 136%;
+    position: absolute;
+    background-color: white;
+    right: -26px;
+    top: 63px;
+    box-shadow: 1px1px 1px;
+    box-shadow: 0px 2px 6px 2px;
+}
+.popup{
+    width: 136%;
+    position: absolute;
+    background-color: white;
+    right: -26px;
+    top: 63px;
+    box-shadow: 1px1px 1px;
+    box-shadow: 0px 2px 6px 2px;
+    display: none;
+}
+.footer_navbar{
+    display: flex;
+    align-items: center;
+    width: 8%;
+    justify-content: space-between;
+    position: relative;
+}
+.footer_slider_icon{
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+}
+
+
+
+
+/* navbar media query */
+
+@media(max-width:1000px){
+  
+    .navbar_slider{
+        background-color: rgb(255 255 255);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* padding: 6px 2rem; */
+     
+    }
+    .footer_slider_icon{
+        display: block;
+    }
+    .navbar_head{
+        width: 36%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .navbar_logo{
+        height: 60px;
+        width: 44px;
+        border-radius: 29px;
+    }
+    .navbar_head_heading{
+        font-family: 'Roboto Condensed', sans-serif;
+        letter-spacing: 10px;
+        font-size: 15px;
+    }
+    .navbar_content_head{
+        justify-content: space-between;
+    font-size: 12px;
+    cursor: pointer;
+    width: 24%;
+    display: none;
+    font-family: 'Roboto Condensed', sans-serif;
+
+    }
+    .footer_navbar{
+        display: flex;
+        align-items: center;
+        width: 33%;
+        justify-content: space-around;
+        position: relative;
+    }
+  }
