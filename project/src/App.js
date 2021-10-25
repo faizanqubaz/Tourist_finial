@@ -8,7 +8,8 @@ import FormComponent from './component/Form/FormComponent'
 import Footer from './component/Footer/Footer';
 import {useSelector} from 'react-redux';
 import FormSigIn from './component/SignIn/Sigin';
-import Dashboard from './component/Dashboard/Dashboard'
+import Dashboard from './component/Dashboard/Dashboard';
+import MapContainer from './component/GoogleMap/GoogleMap'
 
 function App() {
   const selector=useSelector((state)=>state)
@@ -19,9 +20,10 @@ function App() {
         <Route exact path='/'>
         <NavbarComponent name='TOURISM' />
      <SliderComponent />
+     <MapContainer />
      {/* <Adventure name='Gilgit Adventure is Here.' />
      <VideoContainer name='Videos' /> */}
-        <Map /> 
+        {/* <Map />  */}
         {/* <FormComponent /> */}
       <Footer />
         </Route>

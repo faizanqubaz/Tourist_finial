@@ -6,7 +6,7 @@ import Button from '../Button/Button'
 
 const FormComponent = () =>{
 return(
-    <div className='form_slider'>
+    <div id='about' className='form_slider'>
         {/* <div className='form_slider_main_heading'>
             <h1>Contact Us</h1>
         </div> */}
