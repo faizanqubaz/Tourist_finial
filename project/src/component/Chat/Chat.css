@@ -1,0 +1,17 @@
+input{
+    display: block;
+}
+/* .chatapp_slider{
+    max-width: 270px;
+    margin: auto; */
+
+.chatapp_slider{
+    border: 1px solid;
+    max-width: 227px;
+    margin: auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.label{
+    height: 49px;;
+}

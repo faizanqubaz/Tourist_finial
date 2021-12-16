@@ -1,6 +1,8 @@
 import {List,ListItem,Link,ListItemIcon,ListItemText} from '@material-ui/core';
-import {Send,M} from '@material-ui/icons'
-
+import {NavLink} from 'react-router-dom'
+import {Send,M} from '@material-ui/icons';
+import {Switch,Route} from 'react-router-dom';
+import MapContainer from '../../GoogleMap/GoogleMap';
 import './SideBar.css'
 
 const SideBar=()=>{
@@ -17,21 +19,25 @@ return(
 						</ListItem>
 					</Link>
                     <Link  className='item'>
+					<NavLink to='/map'>
 						<ListItem button>
 							<ListItemIcon>
 								<Send style={{ color: "#ffffff" }} />
 							</ListItemIcon>
-							<ListItemText style={{ color: "#ffffff" }} primary="About us" />
+							<ListItemText style={{ color: "#ffffff" }} primary="Map" />
 						</ListItem>
+						</NavLink>
 					</Link>
 
                     <Link  className='item'>
+					<NavLink to='/chat'>
 						<ListItem button>
 							<ListItemIcon>
 								<Send style={{ color: "#ffffff" }} />
 							</ListItemIcon>
-							<ListItemText style={{ color: "#ffffff" }} primary="Home" />
+							<ListItemText style={{ color: "#ffffff" }} primary="Chat" />
 						</ListItem>
+						</NavLink>
 					</Link>
 
                     <Link  className='item'>
@@ -54,7 +60,11 @@ return(
 				</List>
         </div>
         <div className='sidebar_contents'>
-       <h1>hello</h1>
+		<Route path='/map' component={MapContainer} />
+
+      <div>
+
+	  </div>
         </div>
 
     </div>
