@@ -18,22 +18,15 @@ const FormSigIn=()=>{
                </div>
                <div className='sigin_slider_main_form'>
                    <form>
-            <label>Name</label>
-            <input placeholder='Enter your Name' />
+         
             <label>Email</label>
             <input placeholder='Enter your Email' />
             <label>Password</label>
             <input type='password' placeholder='Enter your Password' />
-            <label>ConfirmPassword</label>
-            <input  type='password' placeholder='Confrm your Password' />
             <NavLink to='/dashboard'>
-            <Button  name='Submit' list='signin_slider_button'/>
+            <Button  name='Login' list='signin_slider_button'/>
             </NavLink>
           
-          <div className='slider_button_main'>
-          <Button name='SignIn with Gmail' list='signin_slider_gmail_button'/>
-         <Button name='SignIn with Facebook' list='signin_slider_gmail_button'/>
-          </div>
           
           </form>
                </div>

@@ -1,6 +1,7 @@
 import NavbarComponent from './component/Navbar/Navbar';
 import {Switch,Route} from 'react-router-dom'
 import SliderComponent from './component/Slider/Slider';
+import SignupComponent from './component/signup/signup';
 import Adventure from './component/Adventure/Adventure';
 import VideoContainer from './component/VideoContainer/VideoContainer';
 import Map from './component/Maps/Map';
@@ -31,7 +32,7 @@ function App() {
         <Route exact path='/'>
         <NavbarComponent name='TOURISM' />
      <SliderComponent />
-     {/* <Chat socket={socket} /> */}
+     <Chat socket={socket} />
      {/* <MapContainer /> */}
       <Adventure name='Gilgit Adventure is Here.' />
      <VideoContainer name='Videos' /> 
@@ -39,10 +40,12 @@ function App() {
          <FormComponent /> 
       <Footer />
         </Route>
+        <Route path='/signup' component={SignupComponent} />
         <Route path='/signin' component={FormSigIn} />
         <Route path='/dashboard' component={Dashboard} />
+        <Route path='/map' component={MapContainer} />
        
-        {/* <Route path='/chat' component={Chat({socket})} /> */}
+        <Route path='/chat' component={Chat(socket)} />
       </Switch>
     </div>
   );

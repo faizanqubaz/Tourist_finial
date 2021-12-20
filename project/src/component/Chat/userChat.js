@@ -38,8 +38,10 @@ const sendMessage= async() => {
      {
          message.map((m)=>(
             <>
-             <h1>{m.currentMessage}</h1>
-             <p>{m.time}</p>
+          <div style={{display:'flex',justifyContent:'space-around',width:'7%',alignItems:'center'}}>
+          <h3>{m.currentMessage}</h3>
+             <p style={{color:'red'}}>{m.time}</p>
+          </div>
             </>
          ))
      }

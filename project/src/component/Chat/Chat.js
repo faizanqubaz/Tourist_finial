@@ -19,12 +19,24 @@ const joinRoom = () =>{
  <>
  {
    !showRoom ? (
-<div classname="chatapp_slider">
-     <h3>Join a Chat</h3>
-     <input className="label"   type='text' placeholder='Jhon' onChange={(event)=>setUserName(event.target.value)} />
+<div style={{  border: '1px solid black',
+    maxWidth: '1312px',
+    margin: 'auto'}} classname="chatapp_slider">
+  <div style={{    maxWidth:'234px',
+    margin: 'auto',
+    border: '1px solid'}}>
+  <h3 style={{    textAlign: 'center'}}>Join a Chat</h3>
+     <input style={{    width: '97%',
+    height: '28px'}} className="label"   type='text' placeholder='Jhon' onChange={(event)=>setUserName(event.target.value)} />
      <br/>
-     <input className="label"  type='text' placeholder='Room ID...' onChange={(event)=>setRoom(event.target.value)} />
-     <button onClick={joinRoom}>Join a Room</button>
+     <input  style={{    width: '97%',
+    height: '28px'}} className="label"  type='text' placeholder='Room ID...' onChange={(event)=>setRoom(event.target.value)} />
+     <button style={{width: '100%',
+    backgroundColor: 'blue',
+    color: 'white',
+    border: 'none',
+    padding: '9px'}} onClick={joinRoom}>Join a Room</button>
+  </div>
     </div>
    ) : (
 <Channel socket={socket} username={userName} room={room} />

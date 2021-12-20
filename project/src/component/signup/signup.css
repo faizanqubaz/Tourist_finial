@@ -1,0 +1,81 @@
+
+.signin_slider{
+
+    margin-top: 64px;
+    padding-bottom: 69px;
+}
+
+.sigin_slider_head{
+    text-align: center;
+    font-size: 27px;
+    font-family: math;
+    margin-top: 2px;
+    margin-bottom: 74px;
+}
+.signin_slider_image{
+    height: 450px;
+    width: 515px;
+}
+.signin_slider_button{
+    padding: 1rem 8rem;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+.signin_slider_main{
+  
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: auto;
+    max-width: 872px;
+    border: 2px solid #d5d5d5;
+    padding: 3rem 3rem;
+    
+
+}
+.sigin_slider_main_img{
+   /* width: 40%; */
+   width:40%;
+}
+form input{
+    display: block;
+    border: none;
+    outline: none;
+    width: 100%;
+    border-bottom: 2px solid black;
+    margin-bottom: 42px;
+    margin-top: 20px;
+}
+.sigin_slider_main_form{
+    /* width: 50%; */
+    width: 35%;
+    
+}
+.signin_slider_gmail_button{
+   
+    padding: 1rem 2rem;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    color: white;
+    background-color: #334ccb;
+    cursor: pointer;
+    margin-top: 21px;
+    margin-right: 6px;
+
+}
+.slider_button_main{
+    display: flex;
+}
+lable{
+    font-weight: 600;
+}
+lable input{
+    margin-bottom: 2px;
+}

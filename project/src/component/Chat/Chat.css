@@ -6,11 +6,9 @@ input{
     margin: auto; */
 
 .chatapp_slider{
-    border: 1px solid;
-    max-width: 227px;
+    border: 1px solid black;
+    max-width: 1312px;
     margin: auto;
-    margin-top: 8px;
-    margin-bottom: 8px;
 }
 .label{
     height: 49px;;

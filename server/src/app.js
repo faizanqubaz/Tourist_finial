@@ -3,10 +3,14 @@ const express =require('express');
 const socketio = require('socket.io')
 const cors=require('cors')
 const http =require('http');
+const routes=require('./route')
 const app=express();
 const PORT=4000;
 const server=http.createServer(app);
-app.use(cors())
+app.use(cors());
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use('/v1',routes);
 const STATIC_CHANNELS = ['global_notifications', 'global_chat'];
 const io=socketio(server);
 

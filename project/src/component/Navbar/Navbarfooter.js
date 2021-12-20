@@ -15,7 +15,7 @@ const NavbarFooter =(props)=>{
     return(
        <div className='footer_navbar'>
            {/* {JSON.stringify(loginInfo)} */}
-           <NavLink to='signin'>
+           <NavLink to='signup'>
            <h2 onClick={()=>dispatch(loginRequested({
                email:"eve.holt@reqres.in",
                password:"cityslicka"
