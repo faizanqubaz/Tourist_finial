@@ -8,7 +8,7 @@ import './SideBar.css'
 const SideBar=()=>{
 return(
     <div className='sidebar_slider' style={{display:'flex'}}>
-        <div className='' style={{backgroundColor: '#3f51b5',    borderTop: '1px solid #919191',height: '500px'}}>
+        <div className='' style={{backgroundColor: '#3f51b5',    borderTop: '1px solid #919191',height: '600px'}}>
         <List component='nav' aria-labelledby="nested-list-subheader">
 					<Link  className='item'>
 						<ListItem button>
@@ -40,23 +40,7 @@ return(
 						</NavLink>
 					</Link>
 
-                    <Link  className='item'>
-						<ListItem button>
-							<ListItemIcon>
-								<Send style={{ color: "#ffffff" }} />
-							</ListItemIcon>
-							<ListItemText style={{ color: "#ffffff" }} primary="Home" />
-						</ListItem>
-					</Link>
-
-                    <Link  className='item'>
-						<ListItem button>
-							<ListItemIcon>
-								<Send style={{ color: "#ffffff" }} />
-							</ListItemIcon>
-							<ListItemText style={{ color: "#ffffff" }} primary="Home" />
-						</ListItem>
-					</Link>
+                
 				</List>
         </div>
         <div className='sidebar_contents'>
