@@ -45,7 +45,7 @@ function App() {
         <Route path='/dashboard' component={Dashboard} />
         <Route path='/map' component={MapContainer} />
        
-        <Route path='/chat' component={Chat(socket)} />
+        <Route path='/chat' component={()=>  <Chat socket={socket} /> }/>
       </Switch>
     </div>
   );

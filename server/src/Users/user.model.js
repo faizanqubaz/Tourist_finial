@@ -7,7 +7,7 @@ const knex = Knex({
   useNullAsDefault: true,
   connection: {
     host: 'localhost',
-    database: 'tourist',
+    database: 'touistss',
     user: 'postgres',
     password: 'root'
   }
@@ -22,4 +22,6 @@ Model.knex(knex);
   }
 }
 
-module.exports = User;
+module.exports = {
+  User
+};
