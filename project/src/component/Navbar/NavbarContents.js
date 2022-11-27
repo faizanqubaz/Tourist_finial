@@ -12,13 +12,13 @@ const NavbarContent=()=>{
     },
     {
       id:'2',
-      name:"About Us",
+      name:"Contact Us",
       href:"#about"
     },
     {
       id:'3',
-      name:"Experience",
-      href:"#map"
+      name:"RoomsIDs of Gilgit-Baltistan",
+      href:"#roomIds_slider"
     },   
   ])
    

@@ -10,6 +10,7 @@ import FormComponent from './component/Form/FormComponent'
 import Footer from './component/Footer/Footer';
 import {useSelector} from 'react-redux';
 import FormSigIn from './component/SignIn/Sigin';
+import RoomIds from './component/RoomsIDs/roomid';
 import Dashboard from './component/Dashboard/Dashboard';
 import MapContainer from './component/GoogleMap/GoogleMap';
 import socketClient from "socket.io-client";
@@ -32,12 +33,14 @@ function App() {
         <Route exact path='/'>
         <NavbarComponent name='TOURISM' />
      <SliderComponent />
-     <Chat socket={socket} />
+     {/* <Chat socket={socket} /> */}
      {/* <MapContainer /> */}
       <Adventure name='Gilgit Adventure is Here.' />
      <VideoContainer name='Videos' /> 
-        <Map />  
-         <FormComponent /> 
+        <Map /> 
+        <RoomIds /> 
+         <FormComponent />
+        
       <Footer />
         </Route>
         <Route path='/signup' component={SignupComponent} />
