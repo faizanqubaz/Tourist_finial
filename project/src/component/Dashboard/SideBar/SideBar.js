@@ -18,19 +18,10 @@ return(
 							<ListItemText style={{ color: "#ffffff" }} primary="Home" />
 						</ListItem>
 					</Link>
-                    <Link  className='item'>
-					<NavLink to='/map'>
-						<ListItem button>
-							<ListItemIcon>
-								<Send style={{ color: "#ffffff" }} />
-							</ListItemIcon>
-							<ListItemText style={{ color: "#ffffff" }} primary="Map" />
-						</ListItem>
-						</NavLink>
-					</Link>
+                
 
                     <Link  className='item'>
-					<NavLink to='/chat'>
+					<NavLink to='/roomids'>
 						<ListItem button>
 							<ListItemIcon>
 								<Send style={{ color: "#ffffff" }} />
@@ -40,7 +31,30 @@ return(
 						</NavLink>
 					</Link>
 
+
+					<Link  className='item'>
+					<NavLink to='/hotels'>
+						<ListItem button>
+							<ListItemIcon>
+								<Send style={{ color: "#ffffff" }} />
+							</ListItemIcon>
+							<ListItemText style={{ color: "#ffffff" }} primary="Destinations" />
+						</ListItem>
+						</NavLink>
+
+					</Link>
                 
+					<Link  className='item'>
+					<NavLink to='/destinations'>
+						<ListItem button>
+							<ListItemIcon>
+								<Send style={{ color: "#ffffff" }} />
+							</ListItemIcon>
+							<ListItemText style={{ color: "#ffffff" }} primary="Hotels" />
+						</ListItem>
+						</NavLink>
+						
+					</Link>
 				</List>
         </div>
         <div className='sidebar_contents'>

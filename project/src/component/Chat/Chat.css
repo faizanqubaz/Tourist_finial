@@ -1,6 +1,6 @@
-input{
+/* input{
     display: block;
-}
+} */
 /* .chatapp_slider{
     max-width: 270px;
     margin: auto; */
@@ -13,3 +13,63 @@ input{
 .label{
     height: 49px;;
 }
+
+  
+  .messages-container {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    width: 155%;
+  }
+  
+  .messages {
+    padding: 10px;
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+
+  .left-sidebar {
+    width: 250px;
+    background-color: #f1f1f1;
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .member-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .member-list li {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .chat-main{
+    display: flex;
+    justify-content: space-between;
+    margin: 65px;
+  }
+  
+  .input-container {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  /* input[type='text'] {
+    flex: 1;
+    padding: 5px;
+  } */
+  
+  .chat_btn {
+    padding: 5px 10px;
+  }

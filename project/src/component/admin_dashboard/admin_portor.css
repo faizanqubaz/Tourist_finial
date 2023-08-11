@@ -1,0 +1,106 @@
+.admin_portor_container{
+    border-radius: 7px;
+    border: 1px solid #cecece;
+    height: 700px;
+    background-color: #f0f0f0;
+}
+.admin_portor_head{
+
+padding: 10px 30px;
+}
+.admin_portor_heading{
+    font-family: 'Roboto Condensed';
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+.admin_portor_flex_1{
+    margin: auto;
+    justify-content: space-around;
+    display: flex;
+    max-width: 1124px;
+
+    
+    margin-top: 41px;
+
+ 
+}
+.admin_portor_flex_1_label{
+    margin-bottom: 22px;
+    font-family: inherit;
+}
+.admin_portor_flex_1_conatiner{
+    display: flex;
+    width: 23%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin_portor_flex_1_input {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .admin_portor_flex_1_input:focus {
+    border-color: #007bff;
+  }
+  
+  .admin_portor_flex_1_input::placeholder {
+    color: #999;
+  }
+
+  .admin_portor_flex_1_conatiner_date_input{
+   width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  } 
+  .admin_portor_flex_1_conatiner_date_input:focus {
+    border-color: #007bff;
+  } 
+
+  .admin_portor_flex_1_conatiner_btn{
+  
+    margin-left: 955px;
+
+  }
+
+  .admin_portor_flex_1_conatiner_button{
+    display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  .admin_portor_flex_1_conatiner_button:hover{
+    background-color: #0056b3;
+  }
+
+  .admin_portor_flex_1_conatiner_button:focus{
+    outline: none;
+
+  }
+  .dropdown-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
+    appearance: none; /* Remove default styles on certain browsers */
+    cursor: pointer;
+  }
+  
+  .dropdown-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }

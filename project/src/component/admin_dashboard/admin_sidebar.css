@@ -1,0 +1,55 @@
+
+/* src/Sidebar.css */
+.admin_sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    height: 500px;
+  }
+
+
+.admin_sidebar_header {
+    letter-spacing: 2px;
+    font-size: 27px;
+    margin-top: 10px;
+    font-family: sans-serif;
+  }
+  
+  .sidebar-item {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar-item a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .sidebar-item a:hover {
+    text-decoration: underline;
+  }
+  .admin_main_app-container {
+    display: flex;
+  }
+  
+  .admin_main_main-content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .add_hotel_lis{
+    text-decoration: none;
+    list-style-type: circle;
+    font-size: 18px;
+    cursor: po;
+    margin-top: 20px;
+    font-family: monospace;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .hz_cls{
+    width: 100%;
+    border: 2px solid white;
+  }

@@ -1,9 +1,15 @@
 
-import './room.css'
-const RoomIDs = () => {
+import { useHistory } from 'react-router-dom';
+import './room.css';
 
+const RoomIDs = () => {
+    let history = useHistory();
+    
     const sendClickValue = (event) => {
-        console.log('eee',event.target)
+        console.log('eee',event.target.innerText)
+        history.push(`/chat/${event.target.innerText}`)
+
+        
     }
     return (
         <>

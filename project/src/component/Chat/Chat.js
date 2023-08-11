@@ -1,13 +1,18 @@
 import React,{useState} from 'react';
 import Channel from './userChat'
-import './Chat.css'
+import './Chat.css';
+import {useParams} from 'react-router-dom'
+import { useEffect } from 'react';
 
 
-const Chat = ({socket}) => {
+const Chat = ({socket},a) => {
  const [userName,setUserName]=useState("");
+ const {id} = useParams()
  const [room,setRoom] = useState("");
  const [showRoom, setShowRoom]=useState(false);
-
+useEffect(()=>{
+setRoom(id)
+},[id])
 const joinRoom = () =>{
    
     if(userName !== "" && room !== ""){
@@ -29,8 +34,8 @@ const joinRoom = () =>{
      <input style={{    width: '97%',
     height: '28px'}} className="label"   type='text' placeholder='Jhon' onChange={(event)=>setUserName(event.target.value)} />
      <br/>
-     <input  style={{    width: '97%',
-    height: '28px'}} className="label"  type='text' placeholder='Room ID...' onChange={(event)=>setRoom(event.target.value)} />
+     <input   style={{    width: '97%',
+    height: '28px'}} className="label"   type='text'  placeholder='Room ID...' value={room} onChange={(event)=>setRoom(event.target.value)} />
      <button style={{width: '100%',
     backgroundColor: 'blue',
     color: 'white',

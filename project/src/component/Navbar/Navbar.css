@@ -72,13 +72,7 @@ body{
     box-shadow: 0px 2px 6px 2px;
     display: none;
 }
-.footer_navbar{
-    display: flex;
-    align-items: center;
-    width: 8%;
-    justify-content: space-between;
-    position: relative;
-}
+
 .footer_slider_icon{
     font-size: 22px;
     cursor: pointer;

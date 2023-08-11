@@ -1,0 +1,68 @@
+.addroom_container{
+    border: 1px solid black;
+    max-width: 1361px;
+    margin: auto;
+    padding: 32px 10px;
+    background-color: #f0f0f0;
+    border-bottom: none;
+}
+.main_add_room_container{
+    border: 1px solid black;
+    max-width: 1361px;
+    margin: auto;
+    padding: 32px 10px;
+    background-color: #f0f0f0;
+    border-top: none;
+}
+.add_room_head{
+
+    padding: 10px 30px;
+    }
+    .add_room_heading{
+        font-family: 'Roboto Condensed';
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .admin_addroom_inp_con{
+        padding: 10px 30px;
+    }
+    .add_room_input{
+        width: 12%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .add_room_input:focus {
+        border-color: #007bff;
+      }
+      
+      .add_room_input::placeholder {
+        color: #999;
+      }
+
+      .addroom_btn{
+        display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      
+    margin-left: 13px;
+
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s;
+      }
+      .addroom_btn:hover{
+        background-color: #0056b3;
+      }
+    
+      .addroom_btn:focus{
+        outline: none;
+    
+      }

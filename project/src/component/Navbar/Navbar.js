@@ -3,6 +3,7 @@ import './Navbar.css'
 import Logo from '../../images/logo.jpg';
 import NavbarContent from './NavbarContents';
 import NavbarFooter from './Navbarfooter';
+import Admin from './admin'
 
 
 const NavbarComponent=(props)=>{
@@ -15,6 +16,7 @@ return (
  </div>
  <NavbarContent />
  <NavbarFooter name='SignIn' />
+ <Admin name='Admin' />
 
 </div>
 
