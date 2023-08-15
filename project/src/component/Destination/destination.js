@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import {NavLink, useHistory} from 'react-router-dom'
 import './destination.css'
 import axios from 'axios'
 const HotelDestinations = () => {
+  const history=useHistory()
   const [location, setLocation] = useState('');
   const [hotels, setHotels] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -40,6 +42,18 @@ const HotelDestinations = () => {
       [name]: value
     });
   };
+
+  const handleAvailabilityClick=async(value)=>{
+
+    const response = await axios(`http://localhost:4000/v1/hotel/getroombyId?location=${value}`);
+    if(response.status==200){
+      if (response.data.length===0){
+    
+      }
+      history.push('/guides', response.data);
+    }
+     }
+
 
   const handleBookingSubmit = async() => {
     // Handle booking submission logic here
@@ -88,36 +102,8 @@ const HotelDestinations = () => {
             <p className="hotel-location">{hotel.location}</p>
             <p className="hotel-description">{hotel.description}</p>
             <p className="hotel-price">${hotel.price} per night</p>
-            <button className="book-button" onClick={() => togglePopup(hotel)}>Book Now</button>
-            {isPopupOpen && (
-        <div className="booking-popup">
-          <div className="modal-overlay">
-      <div className="booking-modal">
-      {isBooked && <p className="success_message">Booking successful! We look forward to hosting you.</p>}
-        <h2>Book Room at {selectedHotel.name}</h2>
-        <label>Name:</label>
-        <input type="text" name="name" value={bookingDetails.name} onChange={handleInputChange} />
-        <input type="hidden" name="hotelid" onChange={handleInputChange} />
-        <label>Email:</label>
-        <input type="email" name="email" value={bookingDetails.email} onChange={handleInputChange} />
-        <label>NumberOf_Rooms:</label>
-        <input type="text" name="rooms" value={bookingDetails.number_of_rooms} onChange={handleInputChange} />
-        <label>CNIC:</label>
-        <input type="text" name="cnic" value={bookingDetails.cnic} onChange={handleInputChange} />
-        <label>Country:</label>
-        <input type="text" name="country" value={bookingDetails.country} onChange={handleInputChange} />
-        <label>Check-in Date:</label>
-        <input type="date" name="checkInDate" value={bookingDetails.checkInDate} onChange={handleInputChange} />
-        <label>Check-out Date:</label>
-        <input type="date" name="checkOutDate" value={bookingDetails.checkOutDate} onChange={handleInputChange} />
-        <button className="submit-button" onClick={handleBookingSubmit}>Submit</button>
-        {/* <button className="close-button" onClick={onClose}>Close</button> */}
-        <button className="close-popup-button" onClick={togglePopup}>Close</button>
-      </div>
-    </div>
-          
-        </div>
-      )}
+            <button className="check_btn_availability" onClick={() => handleAvailabilityClick(hotel.id)}>Check Availability</button>
+         
           </div>
         </div>
       ))}

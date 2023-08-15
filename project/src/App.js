@@ -22,6 +22,7 @@ import MainAdmin from './component/admin_dashboard/admin_main_dashboard';
 import PotorPage from './component/hotels/potor';
 import RoomAddition from './component/admin_login/add_room';
 import AddMainRoom from './component/admin_login/add_main_room';
+import RoomViewPage from './component/Room/room.view';
 
 function App() {
   const SERVER = "http://localhost:4000";
@@ -62,6 +63,7 @@ function App() {
         <Route path='/potors' component={PotorPage} />
         <Route path='/addrooms' component={AddMainRoom} />
         <Route path='/hotels' component={NearByHotels} />
+        <Route path='/guides' component={RoomViewPage} />
         <Route path='/destinations' component={HotelDestinations} />
         <Route exact path='/chat' component={()=>  <Chat socket={socket} /> }/>
         <Route  path='/chat/:id' component={()=>  <Chat socket={socket} /> }/>

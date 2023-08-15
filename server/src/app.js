@@ -11,6 +11,7 @@ const server=http.createServer(app);
 const path = require('path');
 const { Destination } = require('./Destinations/destination.model');
 const { Portor } = require('./Portors/portors.model');
+const { Room } = require('./Room/room.model');
 app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -23,6 +24,7 @@ const storage = multer.diskStorage({
   });
   app.use(express.static('public'));
   const upload = multer({ storage }).single('image');
+  const multiUpload=multer({storage})
  
 const STATIC_CHANNELS = ['global_notifications', 'global_chat'];
 const io=socketio(server);
@@ -133,6 +135,34 @@ app.post('/api/portor', async (req, res) => {
       }
     });
   });
+
+  // here is to save room
+  app.post('/api/rooms/:hotelId', multiUpload.array('image', 5), async (req, res) => {
+    const hotelId = req.params.hotelId;
+    const formData = req.body;
+  console.log('fff',formData)
+    try {
+      const savedRooms = [];
+
+      for (let i = 0; i < formData.roomnumber.length; i++) {
+        const room = await Room.query().insert({
+          hotel_id: hotelId,
+          name:formData.roomnumber[i],
+          attachbath: formData.attachbath[i],
+          availability: formData.availability[i],
+          imageUrl: '/uploads/'+req.files[i].filename // Use the filename from the uploaded file
+        });
+        savedRooms.push(room);
+      }
+      res.json({ message: 'Form data saved successfully!', savedRooms });
+    } catch (error) {
+      console.error('Error saving form data:', error);
+      res.status(500).json({ error: 'An error occurred while saving the form data.' });
+    }
+  });
+
+
+
 
 server.listen(PORT,()=>{
     console.log('my server is listing on port '+PORT)

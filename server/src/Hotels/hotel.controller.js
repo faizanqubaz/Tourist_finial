@@ -4,6 +4,7 @@ const axios =require('axios');
 const {upload} =require('../app');
 const { Destination } = require('../Destinations/destination.model');
 const { Portor } = require('../Portors/portors.model');
+const { Room } = require('../Room/room.model');
 
 
 const getHotelDetails = async(req,res) =>{
@@ -48,8 +49,16 @@ const getDestinationDetails = async(req,res) =>{
   }
 }
 
+const getRoomById = async(req,res)=>{
+  const { location } = req.query;
+  console.log('ll',location)
+  const rooms = await Room.query()
+  .where('hotel_id', location)
+  .andWhere('availability', 'yes')
+  res.json(rooms);
+}
+
 const AddHotel=async(req,res)=>{
-console.log('req.files',req.file)
 
     const { name, description,location,rating } = req.body;
     const imageUrl = `/uploads/${req.file.filename}`;
@@ -75,5 +84,6 @@ module.exports={
   AddHotel,
     getHotelDetails,
     getDestinationDetails,
-    getPotorsDetails
+    getPotorsDetails,
+    getRoomById
 }
