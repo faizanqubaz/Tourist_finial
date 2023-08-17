@@ -44,7 +44,7 @@ const HotelDestinations = () => {
   };
 
   const handleAvailabilityClick=async(value)=>{
-
+console.log('valuessss',value)
     const response = await axios(`http://localhost:4000/v1/hotel/getroombyId?location=${value}`);
     if(response.status==200){
       if (response.data.length===0){

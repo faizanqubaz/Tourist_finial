@@ -34,21 +34,6 @@ class HotelMap extends Component {
   
   }
   componentDidMount() {
-    // const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
-
-    // const { latitude, longitude } = storedHotelInfo;
-    // console.log('latitude:', latitude, 'longitude:', longitude);
-
-    // if (storedHotelInfo && latitude && longitude) {
-    //   this.setState({
-    //     hotelLocation: {
-    //       lat: parseFloat('35.324700'),
-    //       lng: parseFloat(''),
-    //     },
-    //   });
-    // } else {
-    //   console.error('Invalid hotel information in local storage.');
-    // }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
@@ -116,7 +101,7 @@ class HotelMap extends Component {
   render() {
     const { hotelInfo } = this.props;
   const { currentPosition, hotelLocation, distance, drivingTime, walkingTime,hotelname } = this.state;
-  const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
+
 
 
   const polylinePath = [currentPosition, hotelLocation];
@@ -130,11 +115,11 @@ class HotelMap extends Component {
         {currentPosition && (
           <Marker
             position={currentPosition}
-            label="You are here"
+            label ="You are here"
           />
         )}
     {hotelLocation && hotelLocation.lat !== 0 && hotelLocation.lng !== 0 && (
-  <Marker position={hotelLocation} label="Khunjerab Top" />
+  <Marker position={hotelLocation} label="Hotel" />
 )}
         {currentPosition && hotelLocation.lat !== 0 && hotelLocation.lng !== 0 && (
           <Polyline

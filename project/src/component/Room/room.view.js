@@ -19,7 +19,7 @@ const RoomViewPage=()=> {
     const [hotelInfo, setHotelInfo] = useState(null);
   const location = useLocation();
   const receivedData = location.state;
-console.log('rese',receivedData)
+console.log('rese',receivedData[0]?.hotel_id)
 
 const [bookingDetails, setBookingDetails] = useState({
     name: '',
@@ -45,8 +45,9 @@ const [bookingDetails, setBookingDetails] = useState({
   const handleBookingSubmit = async() => {
     // Handle booking submission logic here
     // console.log('Booking submitted:', bookingDetails);
-   
-    bookingDetails.hotelId=selectedHotel.id
+      
+    bookingDetails.hotelId=receivedData[0]?.hotel_id;
+    console.log('booking_detailssss',bookingDetails)
     try {
       const bookingGuest=await axios.post('http://localhost:4000/v1/booking/save', bookingDetails);
     //   here we wana update the rooms id to set availability to no

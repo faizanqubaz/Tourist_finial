@@ -31,7 +31,7 @@ setDisplay(!display)
               <Menu style={{ color: "white" }} />
             </IconButton>
             <Typography variant="h6" noWrap>
-              ADVENTURE TOURS
+            VACATION AWAITS
             </Typography>
             <div style={{ position: "relative" }}>
               <Search
