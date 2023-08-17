@@ -80,10 +80,25 @@ console.log('urrrr',imageUrl)
     }
  
 }
+
+const getHotelByID = async(req,res)=>{
+  const { id } = req.query;
+
+  try {
+    const hotelInfo = await Hotel.query().findOne({ id });
+    console.log('hotelInfo',hotelInfo)
+    res.json(hotelInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+}
+
 module.exports={
   AddHotel,
     getHotelDetails,
     getDestinationDetails,
     getPotorsDetails,
-    getRoomById
+    getRoomById,
+    getHotelByID
 }

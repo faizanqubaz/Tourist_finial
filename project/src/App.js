@@ -55,7 +55,7 @@ function App() {
         <Route path='/signup' component={SignupComponent} />
         <Route path='/signin' component={FormSigIn} />
         <Route path='/adminsigin' component={AdminLogin} />
-        <Route path='/dashboard' component={Dashboard} />
+        <Route  path='/dashboard' component={Dashboard} />
         <Route path='/addhotel' component={AddHotelForm} />
         <Route path='/map' component={MapContainer} />
         <Route path='/adminmain' component={MainAdmin} />

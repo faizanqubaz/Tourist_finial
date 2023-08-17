@@ -55,7 +55,7 @@ app.post('/api/hotels', async (req, res) => {
         return res.status(500).json({ error: err.message });
       }
       
-      const { name, description,price,location } = req.body;
+      const { name, description,price,location,email } = req.body;
       const imageUrl = `/uploads/${req.file.filename}`;
       console.log('imageUrl',imageUrl)
       try {
@@ -65,7 +65,8 @@ app.post('/api/hotels', async (req, res) => {
           imageUrl: imageUrl,
           price:price,
           rating:'4',
-          location:location
+          location:location,
+          email:email
         });
         res.json(hotel);
       } catch (error) {

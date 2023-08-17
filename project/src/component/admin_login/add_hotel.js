@@ -8,6 +8,7 @@ const AddHotelForm = () => {
     const history = useHistory(); 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [email,setEmail]=useState('')
     const [price, setPrice] = useState('');
     const [location, setLocation] = useState('');
     const [image, setImage] = useState(null);
@@ -27,6 +28,7 @@ const AddHotelForm = () => {
       formData.append('image', image);
       formData.append('location', location);
       formData.append('price', price);
+      formData.append('email', email);
       try {
         const response = await axios.post('http://localhost:4000/api/hotels/', formData, {
           headers: {
@@ -75,8 +77,19 @@ const AddHotelForm = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
           </div>
+
           <div className="form-group">
-          <label className="form-label" htmlFor="price">Price:</label>
+          <label className="form-label" htmlFor="email">Hotel Email:</label>
+          <input
+            id="email"
+            className="form-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          </div>
+
+          <div className="form-group">
+          <label className="form-label" htmlFor="price">Average Price:</label>
           <input
             id="price"
             className="form-textarea"

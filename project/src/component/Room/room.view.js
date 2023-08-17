@@ -6,12 +6,17 @@ import '../Destination/destination.css'
 import axios from 'axios'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import HotelMap from '../GoogleMap/GoogleMap'
+import Dashboard from '../Dashboard/Dashboard';
+import {useHistory} from 'react-router-dom'
 
 
 const RoomViewPage=()=> {
+  const history=useHistory()
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedHotel, setSelectedHotel] = useState(null);
     const [isBooked, setIsBooked] = useState(false);
+    const [hotelInfo, setHotelInfo] = useState(null);
   const location = useLocation();
   const receivedData = location.state;
 console.log('rese',receivedData)
@@ -49,8 +54,26 @@ const [bookingDetails, setBookingDetails] = useState({
     const response = await axios.put(`http://localhost:4000/v1/rooms/update/${selectedHotel.name}`, {
         guestId:bookedGuestId
     });
+    // get hotels information with hotelID fetching from bookings
+    console.log('guests',bookingGuest.data.hotel_id)
     console.log('Updated Room:', response.data);
-  
+    const hotelRes = await axios.get(`http://localhost:4000/v1/hotel/gethotelbyId?id=${bookingGuest.data.hotel_id}`);
+    
+    const hotelLocation = {
+      latitude: hotelRes.data.latitude, // Replace with actual latitude
+      longitude: hotelRes.data.longitude,
+      name:hotelRes.data.name // Replace with actual longitude
+    };
+    
+    // Combine hotel information and hotelLocation
+    const updatedHotelInfo = { ...hotelInfo, hotelLocation };
+    
+    // Store updated hotel information in local storage
+    localStorage.setItem('hotelInfo', JSON.stringify(updatedHotelInfo));
+    setHotelInfo(hotelRes.data)
+    console.log('hotelRes',hotelRes.data.latitude)
+    console.log('hotelRes',hotelRes.data.longitude)
+    // setHotelInfo(response.data);
       setIsBooked(true);
     } catch (error) {
       console.error('Error submitting booking:', error);
@@ -59,6 +82,7 @@ const [bookingDetails, setBookingDetails] = useState({
     setTimeout(()=>{
       setIsPopupOpen(!isPopupOpen);
       setIsBooked(false);
+      history.push('/dashboard');
     },3000)
     
   };
@@ -135,6 +159,7 @@ const [bookingDetails, setBookingDetails] = useState({
     
     }
   </div>
+
   </div>
   );
 }

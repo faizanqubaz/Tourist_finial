@@ -4,7 +4,7 @@ import './Dashboard.css'
 import Topbar from './Topbar/Topbar';
 import SideBar from './SideBar/SideBar'
 import  MapContainer  from '../GoogleMap/CurrentLocation';
-const Dashboard=()=>{
+const Dashboard=({ hotelInfo })=>{
 
 
     return(
@@ -12,7 +12,7 @@ const Dashboard=()=>{
 <Topbar />
 <div style={{display:'flex'}}>
 <SideBar />
-   <MapContainer />
+    <MapContainer hotelInfo={hotelInfo} /> 
 </div>
 
 </div>

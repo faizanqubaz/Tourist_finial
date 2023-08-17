@@ -31,11 +31,12 @@ export class CurrentLocation extends React.Component {
 
   render() {
     const { currentLocation } = this.state;
+    const { hotelInfo } = this.props;
 
     return (
       <div>
         {Object.keys(currentLocation).length !== 0 ? (
-          <MapContainer currentLocation={currentLocation} />
+          <MapContainer currentLocation={currentLocation} hotelInfo={hotelInfo} />
         ) : (
           <p>Loading...</p>
         )}

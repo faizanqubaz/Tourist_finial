@@ -1,45 +1,54 @@
-
-// import CurrentLocation from './CurrentLocation';
-// import React, { Component } from 'react';
-// import { Map, GoogleApiWrapper,InfoWindow,Marker } from 'google-maps-react';
-
-// export class MapContainer extends Component {
-//   render() {
-//     const { google, currentLocation } = this.props;
-// console.log('lll',currentLocation)
-//     return (
-//       <Map
-//         google={google}
-//         zoom={11}
-//         initialCenter={currentLocation}
-//         center={currentLocation}
-//       >
-//         <Marker  position={currentLocation} />
-//       </Map>
-//     );
-//   }
-// }
-
-// export default GoogleApiWrapper({
-//   apiKey: 'AIzaSyC6xvlbMFrLYt9ExmJvyFnd5pawC_Al4rs'
-// })(MapContainer);
-
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker,Polyline } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, Polyline } from 'google-maps-react';
 import DistanceButton from './distanceButton';
 
 class HotelMap extends Component {
   constructor(props) {
     super(props);
+    let latitude, longitude,hotelname;
+    try {
+      const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
+      latitude = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.latitude : undefined;
+      longitude = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.longitude : undefined;
+      hotelname = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.name : undefined;
+    } catch (error) {
+      console.error('Error parsing stored hotel information:', error);
+      // Handle the error gracefully, such as setting default values or showing a message
+      latitude = undefined;
+      longitude = undefined;
+    }
+
     this.state = {
       currentPosition: null,
-      hotelLocation: { lat: 36.92388507655352, lng: 75.3565647949157 },
-      distance: null, // Add a distance state variable
+      hotelLocation: latitude !== undefined && longitude !== undefined
+        ? {
+          lat: parseFloat(latitude),
+          lng: parseFloat(longitude),
+        }
+        : { lat: 0, lng: 0 },
+      distance: null,
       drivingTime: null,
-  walkingTime: null,
+      walkingTime: null,
+      hotelname:hotelname
     };
+  
   }
   componentDidMount() {
+    // const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
+
+    // const { latitude, longitude } = storedHotelInfo;
+    // console.log('latitude:', latitude, 'longitude:', longitude);
+
+    // if (storedHotelInfo && latitude && longitude) {
+    //   this.setState({
+    //     hotelLocation: {
+    //       lat: parseFloat('35.324700'),
+    //       lng: parseFloat(''),
+    //     },
+    //   });
+    // } else {
+    //   console.error('Invalid hotel information in local storage.');
+    // }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
@@ -47,6 +56,8 @@ class HotelMap extends Component {
           this.setState({
             currentPosition: { lat: latitude, lng: longitude },
           });
+
+
         },
         error => {
           console.error(error);
@@ -66,11 +77,11 @@ class HotelMap extends Component {
       const lon1 = currentPosition.lng;
       const lat2 = hotelLocation.lat;
       const lon2 = hotelLocation.lng;
-  
+
       const R = 6371; // Radius of the Earth in kilometers
       const dLat = (lat2 - lat1) * radianConversion;
       const dLon = (lon2 - lon1) * radianConversion;
-  
+
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * radianConversion) * Math.cos(lat2 * radianConversion) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -82,88 +93,88 @@ class HotelMap extends Component {
       console.log(`Distance to hotel: ${distance} meters`);
     }
     const distanceService = new window.google.maps.DistanceMatrixService();
-  distanceService.getDistanceMatrix(
-    {
-      origins: [currentPosition],
-      destinations: [hotelLocation],
-      travelMode: 'DRIVING', // You can also use 'WALKING'
-      unitSystem: window.google.maps.UnitSystem.METRIC,
-    },
-    (response, status) => {
-      if (status === 'OK') {
-        const drivingTime = response.rows[0].elements[0].duration.text;
-        this.setState({
-          drivingTime: drivingTime,
-        });
-        console.log(`Driving time: ${drivingTime}`);
-      } else {
-        console.error('Error calculating driving time:', status);
+    distanceService.getDistanceMatrix(
+      {
+        origins: [currentPosition],
+        destinations: [hotelLocation],
+        travelMode: 'DRIVING', // You can also use 'WALKING'
+        unitSystem: window.google.maps.UnitSystem.METRIC,
+      },
+      (response, status) => {
+        if (status === 'OK') {
+          const drivingTime = response.rows[0].elements[0].duration.text;
+          this.setState({
+            drivingTime: drivingTime,
+          });
+          console.log(`Driving time: ${drivingTime}`);
+        } else {
+          console.error('Error calculating driving time:', status);
+        }
       }
-    }
-  );
+    );
   };
   render() {
-    const { currentPosition, hotelLocation, distance,drivingTime, walkingTime  } = this.state;
-console.log('dis',walkingTime)
-    // Create a polyline path using current and hotel positions
-    const polylinePath = [currentPosition, hotelLocation];
-    return (
-      <div style={{ position: 'relative', height: '600px', width: '1400px' }}>
-      <Map
-        google={this.props.google}
-        initialCenter={this.state.hotelLocation}
-        zoom={8}
-      >
+    const { hotelInfo } = this.props;
+  const { currentPosition, hotelLocation, distance, drivingTime, walkingTime,hotelname } = this.state;
+  const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
+
+
+  const polylinePath = [currentPosition, hotelLocation];
+  return (
+    <div style={{ position: 'relative', height: '600px', width: '1400px' }}>
+     <Map
+  google={this.props.google}
+  initialCenter={currentPosition || { lat: 35.9202, lng: 74.3080 }} // Use a default location if currentPosition is null
+  zoom={8}
+>
         {currentPosition && (
           <Marker
             position={currentPosition}
             label="You are here"
           />
         )}
-        <Marker
-          position={hotelLocation}
-          label="Khunjerab Top"
-        />
-        <Polyline
-            path={polylinePath}
+    {hotelLocation && hotelLocation.lat !== 0 && hotelLocation.lng !== 0 && (
+  <Marker position={hotelLocation} label="Khunjerab Top" />
+)}
+        {currentPosition && hotelLocation.lat !== 0 && hotelLocation.lng !== 0 && (
+          <Polyline
+          path={polylinePath}
             geodesic={true}
             options={{
-              strokeColor: "#FF0000", // Red line color
+              strokeColor: "#FF0000",
               strokeOpacity: 1,
               strokeWeight: 2,
             }}
           />
-          {distance && (
-            <div style={{
-              position: 'absolute',
-              top: '300px',
-              left: '500px',
-              backgroundColor: 'white',
-              padding: '5px',
-              borderRadius: '5px',
-              boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)'
-              ,
-            }}>
-              Distance to Khunjerab Top: {distance.toFixed(2)/1000} km
-            </div>
-            
-          )}
-
-{drivingTime && (
-    <div>
-      Driving time: {drivingTime}
+        )}
+        {distance && (
+          <div style={{
+            position: 'absolute',
+            top: '300px',
+            left: '500px',
+            backgroundColor: 'white',
+            padding: '5px',
+            borderRadius: '5px',
+            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+          }}>
+            Distance to {hotelname} Hotel is: {distance.toFixed(2)/1000} km
+          </div>
+        )}
+        {drivingTime && (
+          <div>
+            Driving time: {drivingTime}
+          </div>
+        )}
+        {walkingTime && (
+          <div>
+            Walking time: {walkingTime}
+          </div>
+        )}
+      </Map>
+      <DistanceButton onClick={this.calculateDistance} />
     </div>
-  )}
-  {walkingTime && (
-    <div>
-      Walking time: {walkingTime}
-    </div>
-  )}
-        </Map>
-        <DistanceButton onClick={this.calculateDistance} />
-        </div>
-    );
-  }
+  );
+}
 }
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyC6xvlbMFrLYt9ExmJvyFnd5pawC_Al4rs',

@@ -142,7 +142,7 @@ const AddMainRoom = () => {
     <div>
       <div className='addroom_container'>
         <div className='add_room_head'>
-        {successMessage && <p className="success_message">Guide added</p>}
+        {successMessage && <p className="success_message">Romm added</p>}
           <h2 className='add_room_heading'>ADD Rooms To {hotel_details.name} Hotel:</h2>
         </div>
 
