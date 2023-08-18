@@ -51,15 +51,23 @@ const [bookingDetails, setBookingDetails] = useState({
     try {
       const bookingGuest=await axios.post('http://localhost:4000/v1/booking/save', bookingDetails);
     //   here we wana update the rooms id to set availability to no
+   
     const bookedGuestId=bookingGuest.data.id
     const response = await axios.put(`http://localhost:4000/v1/rooms/update/${selectedHotel.name}`, {
         guestId:bookedGuestId
     });
     // get hotels information with hotelID fetching from bookings
-    console.log('guests',bookingGuest.data.hotel_id)
-    console.log('Updated Room:', response.data);
+
     const hotelRes = await axios.get(`http://localhost:4000/v1/hotel/gethotelbyId?id=${bookingGuest.data.hotel_id}`);
-    
+    let bookingPersonData=bookingGuest.data;
+    bookingPersonData.hotelEmail=hotelRes.data.email;
+    console.log('bookingPersonData',bookingPersonData)
+
+    await axios.post('http://localhost:4000/v1/api/sendemail', {
+      hotelEmail: bookingPersonData.hotelEmail,
+      bookingDetails: bookingPersonData
+    });
+
     const hotelLocation = {
       latitude: hotelRes.data.latitude, // Replace with actual latitude
       longitude: hotelRes.data.longitude,

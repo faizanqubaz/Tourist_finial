@@ -4,6 +4,7 @@ const socketio = require('socket.io')
 const cors=require('cors')
 const http =require('http');
 const routes=require('./route')
+const nodemailer = require('nodemailer');
 const app=express();
 const multer = require('multer');
 const PORT=4000;
@@ -45,6 +46,16 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
         console.log('user disconect')
     })
+})
+
+
+// Configure nodemailer transporter (use your email service provider settings)
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'faizanquba1@gmail.com',
+    pass: 'zabazweiskgakhiq'
+  }
 })
 
 // here we will add hotels
@@ -163,6 +174,35 @@ app.post('/api/portor', async (req, res) => {
   });
 
 
+  // send mesasae
+  app.post('/v1/api/sendemail', async (req, res) => {
+    try {
+      const { hotelEmail, bookingDetails } = req.body;
+  console.log('bk',bookingDetails)
+  console.log('ck',hotelEmail)
+      // Send email to the hotel
+      const mailOptions = {
+        from: bookingDetails.email,
+        to: hotelEmail,
+        subject: 'New Booking Request',
+        text: `You have a new booking request:\n\n${JSON.stringify(bookingDetails, null, 2)}`
+      };
+  
+      await transporter.sendMail(mailOptions);
+  
+   
+  
+      res.status(200).json({ message: 'Booking request email sent and data saved successfully.' });
+    } catch (error) {
+      console.error('Error sending booking email:', error);
+      res.status(500).json({ error: 'An error occurred while processing the request.' });
+    }
+  });
+  
+
+  
+  
+  
 
 
 server.listen(PORT,()=>{

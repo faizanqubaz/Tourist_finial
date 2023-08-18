@@ -14,7 +14,8 @@ const saveBookings = async(req,res) =>{
             country:req.body.country,
             checkIn_date:req.body.checkInDate,
             checkOut_date:req.body.checkOutDate,
-            hotel_id:req.body.hotelId
+            hotel_id:req.body.hotelId,
+            email:req.body.email
         });
         res.json(newBooking);
       } catch (error) {
