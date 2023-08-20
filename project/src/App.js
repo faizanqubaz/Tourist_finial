@@ -1,4 +1,9 @@
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
 import NavbarComponent from './component/Navbar/Navbar';
+
+
 import {Switch,Route,useHistory} from 'react-router-dom'
 import SliderComponent from './component/Slider/Slider';
 import SignupComponent from './component/signup/signup';
@@ -23,6 +28,9 @@ import PotorPage from './component/hotels/potor';
 import RoomAddition from './component/admin_login/add_room';
 import AddMainRoom from './component/admin_login/add_main_room';
 import RoomViewPage from './component/Room/room.view';
+import SuccessPage from './component/stripe/stripe';
+
+const stripePromise = loadStripe('pk_test_51HMC3KGcv7U58JGejku7FY3YYTnV29xX1bdluMJ2uKsYIjWamLSbblXCptuut5yIOwkkElMI6gfH4vS80QtlIjFf00F2IJv5aq');
 
 function App() {
   const SERVER = "http://localhost:4000";
@@ -64,9 +72,14 @@ function App() {
         <Route path='/addrooms' component={AddMainRoom} />
         <Route path='/hotels' component={NearByHotels} />
         <Route path='/guides' component={RoomViewPage} />
-        <Route path='/destinations' component={HotelDestinations} />
         <Route exact path='/chat' component={()=>  <Chat socket={socket} /> }/>
         <Route  path='/chat/:id' component={()=>  <Chat socket={socket} /> }/>
+        <Route path='/destinations' component={HotelDestinations} />
+        <Elements stripe={stripePromise}>
+        <Route path="/success" component={SuccessPage} />
+        </Elements>
+       
+
       </Switch>
     </div>
   );

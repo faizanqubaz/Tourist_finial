@@ -8,9 +8,10 @@ class HotelMap extends Component {
     let latitude, longitude,hotelname;
     try {
       const storedHotelInfo = JSON.parse(localStorage.getItem('hotelInfo'));
-      latitude = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.latitude : undefined;
-      longitude = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.longitude : undefined;
-      hotelname = storedHotelInfo && storedHotelInfo.hotelLocation ? storedHotelInfo.hotelLocation.name : undefined;
+      console.log('stored',storedHotelInfo)
+      latitude = storedHotelInfo && storedHotelInfo ? storedHotelInfo.latitude : undefined;
+      longitude = storedHotelInfo && storedHotelInfo ? storedHotelInfo.longitude : undefined;
+      hotelname = storedHotelInfo && storedHotelInfo ? storedHotelInfo.name : undefined;
     } catch (error) {
       console.error('Error parsing stored hotel information:', error);
       // Handle the error gracefully, such as setting default values or showing a message

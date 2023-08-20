@@ -17,6 +17,7 @@ const RoomViewPage=()=> {
     const [selectedHotel, setSelectedHotel] = useState(null);
     const [isBooked, setIsBooked] = useState(false);
     const [hotelInfo, setHotelInfo] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(false);
   const location = useLocation();
   const receivedData = location.state;
 console.log('rese',receivedData[0]?.hotel_id)
@@ -31,7 +32,8 @@ const [bookingDetails, setBookingDetails] = useState({
     country:'',
     checkInDate: '',
     checkOutDate: '',
-    hotelId:''
+    hotelId:'',
+    price:''
   });
 
   const handleInputChange = (event) => {
@@ -52,47 +54,65 @@ const [bookingDetails, setBookingDetails] = useState({
       const bookingGuest=await axios.post('http://localhost:4000/v1/booking/save', bookingDetails);
     //   here we wana update the rooms id to set availability to no
    
-    const bookedGuestId=bookingGuest.data.id
-    const response = await axios.put(`http://localhost:4000/v1/rooms/update/${selectedHotel.name}`, {
-        guestId:bookedGuestId
-    });
-    // get hotels information with hotelID fetching from bookings
+    // const bookedGuestId=bookingGuest.data.id
+    // const response = await axios.put(`http://localhost:4000/v1/rooms/update/${selectedHotel.name}`, {
+    //     guestId:bookedGuestId
+    // });
 
-    const hotelRes = await axios.get(`http://localhost:4000/v1/hotel/gethotelbyId?id=${bookingGuest.data.hotel_id}`);
-    let bookingPersonData=bookingGuest.data;
+    const hotelRes = await axios.get(`http://localhost:4000/v1/hotel/gethotelbyId?id=${receivedData[0]?.hotel_id}`);
+    console.log('hotelRes',hotelRes)
+    let bookingPersonData=bookingDetails;
     bookingPersonData.hotelEmail=hotelRes.data.email;
-    console.log('bookingPersonData',bookingPersonData)
+    bookingPersonData.roomname=selectedHotel.name
+    bookingPersonData.bookingPersonId=bookingGuest.data.id
+    bookingPersonData.hotelLatitude=hotelRes.data.latitude
+    bookingPersonData.hotelLongitude=hotelRes.data.longitude
+    bookingPersonData.hotelName=hotelRes.data.name 
+    // console.log('bookingPersonData',bookingPersonData)
 
     await axios.post('http://localhost:4000/v1/api/sendemail', {
       hotelEmail: bookingPersonData.hotelEmail,
       bookingDetails: bookingPersonData
     });
 
-    const hotelLocation = {
-      latitude: hotelRes.data.latitude, // Replace with actual latitude
-      longitude: hotelRes.data.longitude,
-      name:hotelRes.data.name // Replace with actual longitude
-    };
+    // Trigger a notification to the user
+try {
+  // const response = await axios.post('http://localhost:4000/v1/api/sendnotification', {
+  //   userId: receivedData[0]?.user_id, // Assuming you have user ID associated with the booking
+  //   message: 'Your booking was successful!'
+  // });
+  // console.log('Notification sent:', response.data);
+} catch (error) {
+  console.error('Error sending notification:', error);
+}
+
+    // const hotelLocation = {
+    //   latitude: hotelRes.data.latitude, // Replace with actual latitude
+    //   longitude: hotelRes.data.longitude,
+    //   name:hotelRes.data.name // Replace with actual longitude
+    // };
     
     // Combine hotel information and hotelLocation
-    const updatedHotelInfo = { ...hotelInfo, hotelLocation };
+    // const updatedHotelInfo = { ...hotelInfo, hotelLocation };
     
     // Store updated hotel information in local storage
-    localStorage.setItem('hotelInfo', JSON.stringify(updatedHotelInfo));
-    setHotelInfo(hotelRes.data)
-    console.log('hotelRes',hotelRes.data.latitude)
-    console.log('hotelRes',hotelRes.data.longitude)
+    // localStorage.setItem('hotelInfo', JSON.stringify(updatedHotelInfo));
+    // setHotelInfo(hotelRes.data)
+    // console.log('hotelRes',hotelRes.data.latitude)
+    // console.log('hotelRes',hotelRes.data.longitude)
     // setHotelInfo(response.data);
-      setIsBooked(true);
+      // setIsBooked(true);
     } catch (error) {
       console.error('Error submitting booking:', error);
     }
+    setTimeout(() => {
+      setSuccessMessage(true);
+    }, 1000);
     // Close the modal after submission
     setTimeout(()=>{
-      setIsPopupOpen(!isPopupOpen);
-      setIsBooked(false);
+      
       history.push('/dashboard');
-    },3000)
+    },9000)
     
   };
 
@@ -113,8 +133,9 @@ const [bookingDetails, setBookingDetails] = useState({
 
   return (
     <div>
-    
+     {successMessage && <p className="success_message">We have sent your Request!!! Check your Mail If the Hotel Confirmed It</p>}
     <div className="hotels-list">
+   
     {
   receivedData.length == 0 ? (
     <p className='potors_h2'>No Room Available for this Hotel</p>
@@ -143,8 +164,10 @@ const [bookingDetails, setBookingDetails] = useState({
         <input type="hidden" name="hotelid" onChange={handleInputChange} />
         <label>Email:</label>
         <input type="email" name="email" value={bookingDetails.email} onChange={handleInputChange} />
+        <label>Your Price:</label>
+        <input type="text" name="price" value={bookingDetails.price} onChange={handleInputChange} />
         <label>NumberOf_Rooms:</label>
-        <input type="text" name="rooms" value={bookingDetails.number_of_rooms} onChange={handleInputChange} />
+        <input type="number" name="rooms" value={bookingDetails.number_of_rooms} onChange={handleInputChange} />
         <label>CNIC:</label>
         <input type="text" name="cnic" value={bookingDetails.cnic} onChange={handleInputChange} />
         <label>Country:</label>

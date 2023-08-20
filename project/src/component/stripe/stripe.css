@@ -1,0 +1,56 @@
+/* Define your container styles */
+.stripe_container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header styles */
+  .stripe_header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .stripe_header_heading {
+    font-size: 28px;
+    font-family: math;
+  }
+  
+  /* Form styles */
+  .stripe_form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stripe_input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Card element styles */
+  .CardElement {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  /* Button styles */
+.stripe_btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .stripe_btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }  

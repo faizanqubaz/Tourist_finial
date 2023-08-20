@@ -5,6 +5,7 @@ const cors=require('cors')
 const http =require('http');
 const routes=require('./route')
 const nodemailer = require('nodemailer');
+const stripe = require('stripe')('sk_test_51HMC3KGcv7U58JGet3osWd9FFoLPW0eQneu87sYPxsSmaQug5No99W2ZUwPunVsifYE1iEilXih5Um1kWAAb3nEu00XBpRUsJs');
 const app=express();
 const multer = require('multer');
 const PORT=4000;
@@ -90,7 +91,6 @@ app.post('/api/hotels', async (req, res) => {
 //   here we will add destinations
 
 app.post('/api/destinations', async (req, res) => {
-    console.log('rrrr',req.file)
     upload(req, res, async (err) => {
       if (err) {
         return res.status(500).json({ error: err.message });
@@ -181,16 +181,32 @@ app.post('/api/portor', async (req, res) => {
   console.log('bk',bookingDetails)
   console.log('ck',hotelEmail)
       // Send email to the hotel
+      const queryParams = new URLSearchParams(bookingDetails).toString();
+  // HTML content for the email
+  const bookingLink=`http://localhost:4000/v1/confirmbooking?${queryParams}`
+  const emailHtml = `
+  <p>You have a new booking request for Room ${bookingDetails.roomname}:</p>
+  <ul>
+    <li>Name: ${bookingDetails.name}</li>
+    <li>Email: ${bookingDetails.email}</li>
+    <li>CNIC: ${bookingDetails.cnic}</li>
+    <li>Country: ${bookingDetails.country}</li>
+    <li>CheckInDate: ${bookingDetails.checkInDate}</li>
+    <li>CheckOutDate: ${bookingDetails.checkOutDate}</li>
+    <li>Price For Room: ${bookingDetails.price}</li>
+    <!-- Add more booking details here -->
+  </ul>
+  <p><a href="${bookingLink}"><button>Confirm Booking</button></a></p>
+`;
+
       const mailOptions = {
         from: bookingDetails.email,
         to: hotelEmail,
         subject: 'New Booking Request',
-        text: `You have a new booking request:\n\n${JSON.stringify(bookingDetails, null, 2)}`
+        html:emailHtml
       };
   
       await transporter.sendMail(mailOptions);
-  
-   
   
       res.status(200).json({ message: 'Booking request email sent and data saved successfully.' });
     } catch (error) {
@@ -200,10 +216,58 @@ app.post('/api/portor', async (req, res) => {
   });
   
 
+  // Create a route for confirming bookings
+app.get('/v1/confirmbooking', async (req, res) => {
+  try {
+    console.log('req..qqqq',req.query)
+    // const bookingUserData = req.body;
+    const queryParams = new URLSearchParams(req.query).toString();
+  //   // HTML content for the email
+    const bookingLinks=`http://localhost:4000/v1/addpaymentpage?${queryParams}`
+    const emailHtml = `
+    <p>Click to proceed</p>
+  <h2>Hi ${req.query.name} , We on the behalf of ${req.query.hotelName} have accepted your offer for ${req.query.price}  for you. We booked your room number ${req.query.roomname} on the date from ${req.query.checkInDate} to ${req.query.checkOutDate}, for confirm Please click the PAYMENT BELOW!!THANKS</h2>
+    <p><a href="${bookingLinks}"><button>Go For Payment Integration</button></a></p>
+  `;
+    // Send booking confirmation email to user
+    await transporter.sendMail({
+      from: req.query.hotelEmail,
+      to: req.query.email,
+      subject: 'Booking Confirmation',
+      html: emailHtml,
+    });
+res.send('confirmed')
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Booking confirmation failed' });
+  }
+});
   
+app.post('/api/create-payment-intent', async (req, res) => {
+  const { amount, currency } = req.body;
+console.log('amount',req.body)
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency,
+    });
+    console.log('hhhh',paymentIntent.client_secret )
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}); 
   
-  
-
+app.get('/v1/addpaymentpage',(req,res)=>{
+  try {
+    console.log('i want here ',req.query)
+    const bookingData = req.query;
+    const encodedBookingData = encodeURIComponent(JSON.stringify(bookingData));
+    res.redirect(`http://localhost:3000/success/?bookingdata=${encodedBookingData}`);
+  } catch (error) {
+    
+  }
+})
 
 server.listen(PORT,()=>{
     console.log('my server is listing on port '+PORT)
