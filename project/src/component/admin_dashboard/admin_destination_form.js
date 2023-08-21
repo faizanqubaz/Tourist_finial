@@ -57,6 +57,7 @@ const AdminDestinationPage = () => {
                       className="admin_form_input"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="admin_form_group">
@@ -67,6 +68,7 @@ const AdminDestinationPage = () => {
                       className="admin_form_input"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="admin_form_group">
@@ -77,6 +79,7 @@ const AdminDestinationPage = () => {
                       className="admin_form_input"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="admin_form_group">
@@ -87,6 +90,7 @@ const AdminDestinationPage = () => {
                       className="admin_form_input"
                       value={rating}
                       onChange={(e) => setRating(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -96,6 +100,7 @@ const AdminDestinationPage = () => {
                       className="admin_form_textarea"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -105,6 +110,7 @@ const AdminDestinationPage = () => {
               id="image"
               accept="image/*"
               onChange={handleImageChange}
+              required
             />
           </div>
           <button type="submit" className="form-button">Add Destination</button>

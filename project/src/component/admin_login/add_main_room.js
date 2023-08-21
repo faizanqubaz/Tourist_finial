@@ -73,6 +73,7 @@ const AddMainRoom = () => {
               name="roomnumber"
               value={form.roomnumber}
               onChange={(e) => handleFieldChange(e, index, 'roomnumber')}
+              required
             />
           </div>
           <div>
@@ -83,6 +84,7 @@ const AddMainRoom = () => {
               name="roomsize"
               onChange={(e) => handleFieldChange(e, index, 'roomsize')}
               value={form.roomsize}
+              required
             />
           </div>
 
@@ -94,6 +96,7 @@ const AddMainRoom = () => {
               name="roomprice"
               onChange={(e) => handleFieldChange(e, index, 'roomprice')}
               value={form.roomprice}
+              required
             />
           </div>
 
@@ -105,6 +108,7 @@ const AddMainRoom = () => {
               name="attachbath"
               onChange={(e) => handleFieldChange(e, index, 'attachbath')}
               value={form.attachbath}
+              required
 
 
             />
@@ -118,6 +122,7 @@ const AddMainRoom = () => {
               name="availability"
               onChange={(e) => handleFieldChange(e, index, 'availability')}
               value={form.availability}
+              required
 
             />
           </div>
@@ -131,6 +136,7 @@ const AddMainRoom = () => {
               accept="image/*"
               className="admin_portor_flex_1_input"
               onChange={(e) => handleImageChange(e, index)}
+              required
             />
           </div>
         </div>
@@ -153,6 +159,7 @@ const AddMainRoom = () => {
             id="numForms"
             value={numForms}
             onChange={handleNumFormsChange}
+            required
           />
           {/* <button className='addroom_btn' onClick={handleAddRooms}>Add Rooms</button> */}
         </div>

@@ -66,6 +66,7 @@ const AddHotelForm = () => {
             className="form-input"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </div>
         <div className="form-group">
@@ -75,6 +76,7 @@ const AddHotelForm = () => {
             className="form-textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
           </div>
 
@@ -85,6 +87,7 @@ const AddHotelForm = () => {
             className="form-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           </div>
 
@@ -95,6 +98,7 @@ const AddHotelForm = () => {
             className="form-textarea"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
           </div>
           <div className="form-group">
@@ -104,6 +108,7 @@ const AddHotelForm = () => {
             className="form-textarea"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
+            required
           />
           </div>
           <div className="form-group">
@@ -113,6 +118,7 @@ const AddHotelForm = () => {
               id="image"
               accept="image/*"
               onChange={handleImageChange}
+              required
             />
           </div>
           <button type="submit" className="form-button">Add Hotel</button>

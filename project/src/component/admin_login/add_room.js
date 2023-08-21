@@ -23,6 +23,7 @@ const RoomAddition = ({ onRoomsAdded,hname }) => {
         placeholder="Number of rooms"
         value={numberOfRooms}
         onChange={(e) => setNumberOfRooms(parseInt(e.target.value))}
+        required
       />
       <button className='addroom_btn' onClick={handleAddRooms}>Add Rooms</button>
      </div>

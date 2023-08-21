@@ -78,6 +78,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -89,6 +90,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -100,6 +102,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
+                            required
                         />
                     </div>
                 </div>
@@ -116,6 +119,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -128,6 +132,7 @@ const AdminPortor = () => {
                             maxLength="2"
                             value={dob}
                             onChange={(e) => setDOB(e.target.value)}
+                            required
                         />
 
                     </div>
@@ -167,6 +172,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -178,6 +184,7 @@ const AdminPortor = () => {
                             accept="image/*"
                             className="admin_portor_flex_1_input"
                             onChange={handleImageChange}
+                            required
                         />
                     </div>
 
@@ -189,6 +196,7 @@ const AdminPortor = () => {
                             className="admin_portor_flex_1_input"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            required
                         />
 
                     </div>
