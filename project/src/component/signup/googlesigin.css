@@ -1,0 +1,42 @@
+.google-signin-button:hover {
+    background-color: #f8f8f8;
+    border-color: #999;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  
+  /* Optional: Adjust the button width to your preference */
+  .google-signin-button {
+    width: 180px;
+  }
+
+  /* Google Sign-In button styling */
+.google-signin-button {
+    display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eca300;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.54);
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  padding: 10px 1px;
+  text-transform: none;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  text-decoration: none;
+  }
+
+  .google-signin-button:focus {
+    border-color: #4285f4;
+  }
+  
+  .google-signin-button img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+  }

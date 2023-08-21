@@ -110,7 +110,8 @@ try {
     }, 1000);
     // Close the modal after submission
     setTimeout(()=>{
-      
+      const storedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+      console.log('stored',storedUserInfo)
       history.push('/dashboard');
     },9000)
     
@@ -133,7 +134,7 @@ try {
 
   return (
     <div>
-     {successMessage && <p className="success_message">We have sent your Request!!! Check your Mail If the Hotel Confirmed It</p>}
+    
     <div className="hotels-list">
    
     {
@@ -157,6 +158,7 @@ try {
         <div className="booking-popup">
           <div className="modal-overlay">
       <div className="booking-modal">
+         {successMessage && <p className="success_message">We have sent your Request!!! Check your Mail If the Hotel Confirmed It</p>}
       {isBooked && <p className="success_message">Booking successful! We look forward to hosting you.</p>}
       <h2>Book Room at {selectedHotel.name}</h2>
         <label>Name:</label>

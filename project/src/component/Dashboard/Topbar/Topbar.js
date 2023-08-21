@@ -17,11 +17,21 @@ import {
 } from "@material-ui/icons";
 import "./Topbar.css";
 import {useState} from 'react'
-const Topbar = () => {
+const Topbar = ({ userData }) => {
   const [display,setDisplay]=useState(false)
+  const [popupVisible, setPopupVisible] = useState(false); 
+
   const displayLog=()=>{
+    
 setDisplay(!display)
   }
+
+  const togglePopup = () => {
+    console.log('Toggling popup visibility',popupVisible);
+    setPopupVisible(!popupVisible);
+    console.log('after',popupVisible)
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -58,47 +68,34 @@ setDisplay(!display)
                 <Notifications style={{ color: "white" }} />
               </Badge>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={togglePopup}> 
               <Badge>
                 <SettingsPower style={{ color: "white" }} />
               </Badge>
             </IconButton>
 
-            <IconButton>
-              <Badge>
-                <SettingsPhone style={{ color: "white" }} />
-              </Badge>
-            </IconButton>
+           
+
             <IconButton onClick={displayLog}>
-              <Badge badgeContent='1' color='secondary'>
-                <PersonPin style={{ color: "white" }} />
-              </Badge>
-            </IconButton>
+  <Badge  color='secondary'>
+    <img src={userData?.picture} alt="Profile" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+  </Badge>
+</IconButton>
+<span style={{marginTop:'25px'}}>{userData?.username}</span>
           </div>
         </div>
       </Toolbar>
-      {
-        display ? 
-        <NavLink to='map'>
-        <div  style={{height:'200px',border:'1px solid black',backgroundColor:'white',
-        width: '90px',
-        position: 'absolute',
-        right: '0',
-        top: '46px',
-        left: '1239px'
-        
-    }}>
-    <div>
     
-      <h4 style={{color:'red'}}>Map</h4>
-      <hr />
-      <h4 style={{color:'red'}}>Logout</h4>
-      <hr />
-    </div>
+      {popupVisible && (
+        <div className="popup_boxxx">
+          <div>
+            <h4 style={{ color: 'red' }}>Map</h4>
+            <hr />
+            <h4 style={{ color: 'red' }}>Logout</h4>
+            <hr />
           </div>
-          </NavLink>
-          : null
-      }
+        </div>
+      )}
      
     </AppBar>
   );

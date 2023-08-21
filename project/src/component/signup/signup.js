@@ -2,64 +2,34 @@ import './signup.css';
 import SignInImage from '../../images/jelo.jpg';
 import Button from '../Button/Button';
 import { NavLink, useHistory } from 'react-router-dom';
+import GoogleSignInButton from './GoogleSignInButton';
 import axios from 'axios'
 import { useState } from 'react';
 
 const FormSigIn = () => {
-    const history = useHistory()
-    console.log(history)
- const  [userData, setUserData] = useState({
-     name: '',
-     lastName: '',
-     email: '',
-     password: '',
-   
- })
- const submitHandler = async (event) => {
-    event.preventDefault()
-  const data =await  axios.post('http://localhost:4000/v1/user/register', userData)
-  if(data.status===201){
-    history.push("/signin")
-  }
- };
- 
- const changeHandler = (e) => {
-    const {name,value}=e.target;
-    setUserData({...userData,[name]:value})
+    const handleGoogleSignInSuccess = (response) => {
+        const token = response.tokenId;
+    console.log('tokenn',token)
+        // Send the token to your backend for verification
+        fetch('http://localhost:4000/v1/google-signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+
+          },
+          body: JSON.stringify({ token }),
+        })
+          .then((res) => res.text())
+          .then((data) => console.log(data))
+          .catch((error) => console.error('Error:', error));
+      };
     
- }
-    return (
-        <div className='signin_slider'>
-            <div className='sigin_slider_head'>
-                <h2 className='sigin_slider_heading'>Register Here</h2>
-            </div>
-            <div className='signin_slider_main'>
-                <div className='sigin_slider_main_img'>
-                    <img className='signin_slider_image' src={SignInImage} />
-
-
-                </div>
-                <div className='sigin_slider_main_form'>
-                    <form onSubmit={submitHandler}>
-                        <label>Name</label>
-                        <input name='name' placeholder='Enter your Name' onChange={changeHandler} />
-
-                        <label>LastNAme</label>
-                        <input name='lastName' placeholder='Enter your LastName' onChange={changeHandler} />
-
-                        <label>Email</label>
-                        <input name='email' placeholder='Enter your Email' onChange={changeHandler}/>
-                        <label>Password</label>
-                        <input name='password' type='password' placeholder='Enter your Password' onChange={changeHandler}  />
-                       
-                            <Button name='Register' list='signin_slider_button' />
-
-
-
-
-                    </form>
-                </div>
-            </div>
+      const handleGoogleSignInFailure = (error) => {
+        console.log('Google Sign-In Failed:', error);
+      };
+      return (
+        <div>
+          <GoogleSignInButton  />
         </div>
     )
 }

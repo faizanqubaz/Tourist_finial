@@ -1,19 +1,26 @@
 const {Hotel} =require('./Hotels/hotel.model')
 const express =require('express');
+const cookie = require('cookie');
+var LocalStorage = require('node-localstorage').LocalStorage;
+var localStorage = new LocalStorage('./scratch');
 const socketio = require('socket.io')
 const cors=require('cors')
 const http =require('http');
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client('157698735716-9mm9u6eg3t7sfip697emcucaaopjgpd0.apps.googleusercontent.com');
 const routes=require('./route')
 const nodemailer = require('nodemailer');
 const stripe = require('stripe')('sk_test_51HMC3KGcv7U58JGet3osWd9FFoLPW0eQneu87sYPxsSmaQug5No99W2ZUwPunVsifYE1iEilXih5Um1kWAAb3nEu00XBpRUsJs');
 const app=express();
 const multer = require('multer');
+const axios = require('axios')
 const PORT=4000;
 const server=http.createServer(app);
 const path = require('path');
 const { Destination } = require('./Destinations/destination.model');
 const { Portor } = require('./Portors/portors.model');
 const { Room } = require('./Room/room.model');
+const { User } = require('./Users/user.model');
 app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -268,6 +275,100 @@ app.get('/v1/addpaymentpage',(req,res)=>{
     
   }
 })
+
+
+app.post('/v1/google-signin', async (req, res) => {
+  const { token } = req.body;
+ 
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: '157698735716-9mm9u6eg3t7sfip697emcucaaopjgpd0.apps.googleusercontent.com',
+    });
+
+    const payload = ticket.getPayload();
+    const userId = payload.sub;
+
+    // You can use the userId to identify and manage user sessions on your backend.
+
+    res.status(200).send('Google Sign-In Successful');
+  } catch (error) {
+    res.status(401).send('Google Sign-In Failed');
+  }
+});
+
+
+app.get('/v1/callback',async(req,res)=>{
+  console.log('req.code',req.query.code)
+  const { data } = await axios({
+    url: `https://oauth2.googleapis.com/token`,
+    method: 'post',
+    data: {
+      client_id: '157698735716-v65d39mm2m0mjgakscpd707g8lm21cpv.apps.googleusercontent.com',
+      client_secret: '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',
+      redirect_uri: 'http://localhost:4000/v1/callback',
+      grant_type: 'authorization_code',
+      code:req.query.code,
+    },
+  });
+  const access_token=data.access_token;
+  const profile= await axios({
+    url: 'https://www.googleapis.com/oauth2/v2/userinfo',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  const userData = profile.data;
+
+    // Set the user data in a cookie
+    localStorage.setItem('userData', JSON.stringify({
+      username: userData.name,
+      email: userData.email,
+      picture:userData.picture
+    }));
+
+  req.userData=userData
+const userEmail=userData.email;
+const present=await isEmailPresent(userEmail);
+if(!present){
+  try {
+    const newUser = await User.query().insert({
+      email: userEmail,
+      name:userData.name
+    });
+    const encodedUserData = encodeURIComponent(JSON.stringify(userData));
+    res.redirect(`http://localhost:3000/dashboard/?userdata=${encodedUserData}`);
+    console.log('New user saved:', newUser);
+  } catch (error) {
+    console.error('Error saving new user:', error);
+  }
+
+ 
+}
+const encodedUserData = encodeURIComponent(JSON.stringify(userData));
+res.redirect(`http://localhost:3000/dashboard/?userdata=${encodedUserData}`);
+
+  // if the user email save in the User table
+
+
+})
+
+async function isEmailPresent(email) {
+  try {
+    const userWithEmail = await User.query().findOne({ email });
+    return !!userWithEmail; // If userWithEmail is truthy, email is present
+  } catch (error) {
+    console.error('Error checking email presence:', error);
+    return false; // Return false in case of an error
+  }
+}
+
+app.get('/v1/userdata', (req, res) => {
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  res.json(userData);
+});
 
 server.listen(PORT,()=>{
     console.log('my server is listing on port '+PORT)

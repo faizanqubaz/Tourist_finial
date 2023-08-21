@@ -60,8 +60,8 @@ function App() {
         
       <Footer />
         </Route>
-        <Route path='/signup' component={SignupComponent} />
-        <Route path='/signin' component={FormSigIn} />
+        {/* <Route path='/' component={SignupComponent} /> */}
+        {/* <Route path='/' component={FormSigIn} /> */}
         <Route path='/adminsigin' component={AdminLogin} />
         <Route  path='/dashboard' component={Dashboard} />
         <Route path='/addhotel' component={AddHotelForm} />

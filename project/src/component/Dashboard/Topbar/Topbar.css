@@ -11,3 +11,16 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.popup_boxxx {
+    position: absolute;
+    top: 40px;
+    right: 5px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    display: none; /* Initially hide the popup */
+    z-index: 10;
+  }
+  
+ 
