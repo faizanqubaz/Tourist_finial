@@ -42,15 +42,29 @@
 }
 
 .book-button {
-  padding: 8px 12px;
+  padding: 8px 58px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px;
   transition: background-color 0.3s;
 }
 
+.whatsapp-button {
+  background-color: #25D366;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.whatsapp-button:hover {
+  background-color: #128C7E;
+}
 .book-button:hover {
   background-color: #0056b3;
 }

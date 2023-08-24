@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
+import axios from 'axios'
 import '../hotels/nearby.css'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -35,6 +36,18 @@ console.log('rese',receivedData)
           <p className="hotel-description">{hotel.description}</p>
           <p className="hotel-price">{hotel.price}</p>
           
+       <button
+  className="whatsapp-button"
+  onClick={() => {
+    const countryCode = '92';
+    const phoneNumber = hotel.phoneNumber;
+    const whatsappUrl = `https://wa.me/${countryCode}${phoneNumber}`;
+    
+    window.open(whatsappUrl, '_blank');
+  }}
+>
+  Contact via WhatsApp
+</button>
         </div>
       </div>
     ))

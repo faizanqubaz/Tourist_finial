@@ -44,6 +44,7 @@ const AddMainRoom = () => {
         formData.append('roomprice', formItem.roomprice);
         formData.append('attachbath', formItem.attachbath);
         formData.append('availability', formItem.availability)
+     
         // ...append other form data properties
       });
       console.log('form', formState)

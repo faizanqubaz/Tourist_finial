@@ -3,8 +3,10 @@ const express =require('express');
 const cookie = require('cookie');
 var LocalStorage = require('node-localstorage').LocalStorage;
 var localStorage = new LocalStorage('./scratch');
+const cron = require('node-cron')
 const socketio = require('socket.io')
-const cors=require('cors')
+const cors=require('cors');
+const webpush = require('web-push');
 const http =require('http');
 const { OAuth2Client } = require('google-auth-library');
 const googleClient = new OAuth2Client('157698735716-9mm9u6eg3t7sfip697emcucaaopjgpd0.apps.googleusercontent.com');
@@ -21,6 +23,7 @@ const { Destination } = require('./Destinations/destination.model');
 const { Portor } = require('./Portors/portors.model');
 const { Room } = require('./Room/room.model');
 const { User } = require('./Users/user.model');
+const { Bookings } = require('./Bookings/booking.model');
 app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -57,6 +60,91 @@ io.on('connection',(socket)=>{
 })
 
 
+// Set up VAPID keys
+webpush.setVapidDetails(
+  'mailto:faizanquba1@gmail.com',
+  'BD_skaSbpFW3bqN_T3UdKteF1OIm1SgEm1AMZlxZp0zebVzKcjQDXy9U0STezJLPc7OExX45RFsVIRlOJ4LLpM0',
+  '1RmSSbanZCB6buKgIGDtNj0oqwhJ6EJOFo6Kq6fQwys'
+);
+
+
+// Array to store user subscriptions
+const subscriptions = [];
+
+// Subscribe route to store user's subscription details
+app.post('/v1/subscribe', (req, res) => {
+  const subscription = req.body;
+  subscriptions.push(subscription);
+  res.status(201).json({});
+});
+
+
+async function updateBookingStatus(bookingId) {
+  try {
+    const roomsToUpdate = await Room.query().whereIn('guest_id', [bookingId]);
+console.log('roomtoupdate',roomsToUpdate)
+    if (roomsToUpdate.length === 0) {
+      console.log('No rooms found for the given booking IDs.');
+      return;
+    }
+
+    // Update the availability status to 'no' for each room
+    await Promise.all(
+      roomsToUpdate.map(async room => {
+        await Room.query().findById(room.id).patch({ availability: 'yes' });
+      })
+    );
+
+    console.log('Room availability updated for the specified booking IDs.');
+  } catch (error) {
+    console.error(`Error updating booking status for booking ${bookingId}:`, error);
+  }
+}
+
+// Simulated function to check out bookings with same check-in and check-out dates
+async function checkoutSameDayBookings() {
+  // const currentRoomData = JSON.parse(localStorage.getItem('hotelInfo'));
+  const bookings = await Bookings.query();
+  const today = new Date().toISOString().substr(0, 10);
+  
+  bookings.forEach(booking => {
+  
+  
+    if (booking.checkIn_date === today && booking.checkOut_date === today) {
+ 
+      updateBookingStatus(booking.id);
+    }
+  });
+}
+
+// Schedule the cron job to run every day at a specific time (e.g., midnight)
+// Schedule the cron job to run every 10 seconds
+
+cron.schedule('0 0 * * *', () => {
+  checkoutSameDayBookings();
+});
+
+
+// Send push notifications route
+app.post('/send-notification', (req, res) => {
+  const notificationPayload = {
+    notification: {
+      title: 'Booking Successful!',
+      body: 'Your room booking has been confirmed.',
+      icon: 'icon-url', // URL to an icon image
+    },
+  };
+
+  subscriptions.forEach(subscription => {
+    webpush.sendNotification(subscription, JSON.stringify(notificationPayload))
+      .catch(error => {
+        console.error('Error sending push notification:', error);
+      });
+  });
+
+  res.status(200).json({});
+});
+
 // Configure nodemailer transporter (use your email service provider settings)
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -74,7 +162,7 @@ app.post('/api/hotels', async (req, res) => {
         return res.status(500).json({ error: err.message });
       }
       
-      const { name, description,price,location,email } = req.body;
+      const { name, description,price,location,email,whatsapp } = req.body;
       const imageUrl = `/uploads/${req.file.filename}`;
       console.log('imageUrl',imageUrl)
       try {
@@ -85,7 +173,8 @@ app.post('/api/hotels', async (req, res) => {
           price:price,
           rating:'4',
           location:location,
-          email:email
+          email:email,
+          whatsapp_number:whatsapp
         });
         res.json(hotel);
       } catch (error) {
@@ -168,6 +257,7 @@ app.post('/api/portor', async (req, res) => {
           hotel_id: hotelId,
           name:formData.roomnumber[i],
           attachbath: formData.attachbath[i],
+          price:parseInt(formData.roomprice[i]),
           availability: formData.availability[i],
           imageUrl: '/uploads/'+req.files[i].filename // Use the filename from the uploaded file
         });
@@ -183,6 +273,47 @@ app.post('/api/portor', async (req, res) => {
 
   // send mesasae
   app.post('/v1/api/sendemail', async (req, res) => {
+    try {
+      const { hotelEmail, bookingDetails } = req.body;
+  console.log('bk',bookingDetails)
+  console.log('ck',hotelEmail)
+      // Send email to the hotel
+      const queryParams = new URLSearchParams(bookingDetails).toString();
+  // HTML content for the email
+  const bookingLink=`http://localhost:4000/v1/confirmbooking?${queryParams}`
+  const emailHtml = `
+  <p>You have a new booking request for Room ${bookingDetails.roomname}:</p>
+  <ul>
+    <li>Name: ${bookingDetails.name}</li>
+    <li>Email: ${bookingDetails.email}</li>
+    <li>CNIC: ${bookingDetails.cnic}</li>
+    <li>Country: ${bookingDetails.country}</li>
+    <li>CheckInDate: ${bookingDetails.checkInDate}</li>
+    <li>CheckOutDate: ${bookingDetails.checkOutDate}</li>
+    <li>Price For Room: ${bookingDetails.price}</li>
+    <!-- Add more booking details here -->
+  </ul>
+  <p><a href="${bookingLink}"><button>Confirm Booking</button></a></p>
+`;
+
+      const mailOptions = {
+        from: bookingDetails.email,
+        to: hotelEmail,
+        subject: 'New Booking Request',
+        html:emailHtml
+      };
+  
+      await transporter.sendMail(mailOptions);
+  
+      res.status(200).json({ message: 'Booking request email sent and data saved successfully.' });
+    } catch (error) {
+      console.error('Error sending booking email:', error);
+      res.status(500).json({ error: 'An error occurred while processing the request.' });
+    }
+  });
+  
+
+  app.post('/v1/api/booked', async (req, res) => {
     try {
       const { hotelEmail, bookingDetails } = req.body;
   console.log('bk',bookingDetails)

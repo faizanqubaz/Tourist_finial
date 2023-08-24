@@ -13,6 +13,7 @@ const AddHotelForm = () => {
     const [location, setLocation] = useState('');
     const [image, setImage] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [whatsappnumber,setWhatsappNumber]=useState('')
   
     const handleImageChange = (e) => {
      
@@ -29,6 +30,7 @@ const AddHotelForm = () => {
       formData.append('location', location);
       formData.append('price', price);
       formData.append('email', email);
+      formData.append('whatsapp',whatsappnumber)
       try {
         const response = await axios.post('http://localhost:4000/api/hotels/', formData, {
           headers: {
@@ -111,6 +113,18 @@ const AddHotelForm = () => {
             required
           />
           </div>
+
+          <div className="form-group">
+          <label className="form-label" htmlFor="location">Contact-NO:</label>
+          <input
+            id="whatsapp"
+            className="form-textarea"
+            value={whatsappnumber}
+            onChange={(e) => setWhatsappNumber(e.target.value)}
+            required
+          />
+          </div>
+
           <div className="form-group">
             <label className="form-label" htmlFor="image">Hotel Image:</label>
             <input

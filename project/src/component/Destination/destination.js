@@ -102,8 +102,22 @@ console.log('valuessss',value)
             <p className="hotel-location">{hotel.location}</p>
             <p className="hotel-description">{hotel.description}</p>
             <p className="hotel-price">${hotel.price} per night</p>
+            <div style={{display:'flex'}}>
             <button className="check_btn_availability" onClick={() => handleAvailabilityClick(hotel.id)}>Check Availability</button>
-         
+            <button
+  className="whatsapp-button"
+  onClick={() => {
+    console.log('dddd',hotel.whatsapp_number)
+    const countryCode = '92';
+    const phoneNumber = `${hotel.whatsapp_number}`;
+    const whatsappUrl = `https://wa.me/${countryCode}${phoneNumber}`;
+    
+    window.open(whatsappUrl, '_blank');
+  }}
+>
+  Contact via WhatsApp
+</button>
+            </div>
           </div>
         </div>
       ))}
