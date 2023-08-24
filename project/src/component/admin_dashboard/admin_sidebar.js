@@ -16,9 +16,6 @@ const AdminSidebar = ({ onItemClick }) => {
       <div className="sidebar-item" onClick={() => onItemClick('portor')} >
       <li className='add_hotel_lis'>Add Guide</li>
       </div>
-      <div className="sidebar-item" onClick={() => onItemClick('contact')}>
-      <li className='add_hotel_lis'>contact us</li>
-      </div>
     </div>
   );
 };

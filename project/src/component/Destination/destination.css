@@ -173,3 +173,12 @@
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
+.hotel-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.hotel-card:hover {
+  transform: scale(1.05); /* Increase the scale value for a stronger zoom effect */
+}
