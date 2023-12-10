@@ -179,6 +179,3 @@
   transition: transform 0.3s ease;
 }
 
-.hotel-card:hover {
-  transform: scale(1.05); /* Increase the scale value for a stronger zoom effect */
-}
