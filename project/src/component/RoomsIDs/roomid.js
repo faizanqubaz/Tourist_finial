@@ -19,9 +19,9 @@ const RoomIDs = () => {
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th>Department</th>
+                            <th>Hotel List</th>
                             <th>location</th>
-                            <th>Room ID</th>
+                            <th>PhoneNumber</th>
                         </tr>
                     </thead>
                     <tbody>

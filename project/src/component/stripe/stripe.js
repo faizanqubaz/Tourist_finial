@@ -98,7 +98,21 @@ const SuccessPage = () => {
       <form className='stripe_form' onSubmit={handleSubmit}>
         <input value={decodedBookingData.price} className='stripe_input' type="number" onChange={handleAmountChange} placeholder="Amount in cents" disabled />
         <input className='stripe_input' type="text" onChange={handleCurrencyChange} placeholder="Currency code" />
-        <CardElement />
+        <CardElement
+          options={{
+            hidePostalCode: true,
+            style: {
+              base: {
+                fontSize: '16px',
+                fontFamily: '"Open Sans", sans-serif',
+                color: '#424770',
+                '::placeholder': {
+                  color: '#aab7c4',
+                },
+              },
+            },
+          }}
+        />
         <button className='stripe_btn' type="submit" onClick={handleCreatePaymentIntent} disabled={!stripe}>
           Pay
         </button>
